@@ -68,8 +68,6 @@ server.register({
 })
 ```
 
-It is important that this util just lists routes actually defined while execution.
-
 ## API
 `wozu(server)`
 
