@@ -36,8 +36,8 @@
     "standard": "^8.6.0"
   },
   "engines": {
-    "node": "^6.0.0",
-    "npm": "^3.8.8"
+    "node": ">=6.0.0",
+    "npm": ">=3.8.8"
   },
   "peerDependencies": {
     "hapi": ">=13.0.0"
