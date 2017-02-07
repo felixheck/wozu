@@ -1,0 +1,50 @@
+{
+  "name": "wozu",
+  "description": "Util to list all defined hapi.js routes",
+  "keywords": [
+    "hapi",
+    "api",
+    "routes",
+    "util",
+    "wo",
+    "wozu"
+  ],
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": {
+    "name": "Felix Heck",
+    "email": "hi@whoTheHeck.de",
+    "url": "http://whoTheHeck.de"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/felixheck/wozu.git"
+  },
+  "bugs": {
+    "email": "hi@whoTheHeck.com",
+    "url": "https://github.com/felixheck/wozu/issues"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "npm test -- -w",
+    "lint": "standard",
+    "test": "nyc --check-coverage --lines 60 ava --timeout=1m",
+    "coverage": "nyc report --reporter=lcov"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "standard": "^8.6.0"
+  },
+  "engines": {
+    "node": "^6.0.0",
+    "npm": "^3.8.8"
+  },
+  "peerDependencies": {
+    "hapi": "^13.0.0"
+  },
+  "devDependencies": {
+    "ava": "^0.18.1",
+    "hapi": "^16.1.0",
+    "nyc": "^10.1.2"
+  }
+}
