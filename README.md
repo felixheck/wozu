@@ -76,7 +76,7 @@ It is important that this util just lists routes actually defined while executio
 - `server {hapi.Server}` - related hapi server instance.
 
 
-## Developing & Testing
+## Developing and Testing
 First you have to install all dependencies:
 ```
 $ npm install
