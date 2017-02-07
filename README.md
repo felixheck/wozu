@@ -1,3 +1,5 @@
+![wozu](https://raw.githubusercontent.com/felixheck/wozu/master/logo.png)
+
 #### Util to list all defined hapi.js routes
 
 [![Travis](https://img.shields.io/travis/felixheck/wozu.svg)](https://travis-ci.org/felixheck/wozu/builds/) ![node](https://img.shields.io/node/v/wozu.svg) ![npm](https://img.shields.io/npm/dt/wozu.svg)
