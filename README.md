@@ -14,7 +14,8 @@
 ## Introduction
 **wozu** is a util to list all defined routes of your [hapi.js](https://github.com/hapijs/hapi) server instance. Just pass the instance and get a list of all endpoints including paths and methods. *wozu* is the German translation for *wherefore* - it was implemented as an util related to the plugin [wo](https://github.com/rjrodger/wo).
 
-This plugin is implemented in ECMAScript 6. Additionally `standard` and `ava` are used to grant a high quality implementation.
+This plugin is implemented in ECMAScript 6 without any transpilers like `babel`.<br>
+Additionally `standard` and `ava` are used to grant a high quality implementation.
 
 ## Installation
 For installation use the [Node Package Manager](https://github.com/npm/npm):
