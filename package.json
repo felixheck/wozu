@@ -1,11 +1,14 @@
 {
   "name": "wozu",
-  "description": "Util to list all defined hapi.js routes",
+  "description": "Server decorator to list all defined hapi.js routes",
   "keywords": [
     "hapi",
-    "api",
-    "routes",
+    "plugin",
     "util",
+    "connection",
+    "list",
+    "routes",
+    "route",
     "wo",
     "wozu"
   ],
@@ -32,19 +35,20 @@
     "coverage": "nyc report --reporter=lcov"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
-    "standard": "^8.6.0"
-  },
-  "engines": {
-    "node": ">=6.0.0",
-    "npm": ">=3.8.8"
-  },
-  "peerDependencies": {
-    "hapi": ">=13.0.0"
+    "joi": "^10.2.1",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "ava": "^0.18.1",
     "hapi": "^16.1.0",
-    "nyc": "^10.1.2"
+    "nyc": "^10.1.2",
+    "standard": "^8.6.0"
+  },
+  "peerDependencies": {
+    "hapi": ">=13.0.0"
+  },
+  "engines": {
+    "node": ">=6.0.0",
+    "npm": ">=3.8.8"
   }
 }
