@@ -1,6 +1,6 @@
 ![wozu](https://raw.githubusercontent.com/felixheck/wozu/master/logo.png)
 
-#### Server decorator to list all defined hapi.js routes
+#### Server decorator and util to list all defined hapi.js routes
 
 [![Travis](https://img.shields.io/travis/felixheck/wozu.svg)](https://travis-ci.org/felixheck/wozu/builds/) ![node](https://img.shields.io/node/v/wozu.svg) ![npm](https://img.shields.io/npm/dt/wozu.svg) [![standard](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](http://standardjs.com/) ![npm](https://img.shields.io/npm/l/wozu.svg)
 ---
@@ -8,13 +8,14 @@
 1. [Introduction](#introduction)
 2. [Installation](#installation)
 3. [Usage](#usage)
-4. [API](#api)
-5. [Developing and Testing](#developing-and-testing)
-6. [Contribution](#contribution)
-7. [License](#license)
+4. [Usage as Util](#usage-as-util)
+5. [API](#api)
+6. [Developing and Testing](#developing-and-testing)
+7. [Contribution](#contribution)
+8. [License](#license)
 
 ## Introduction
-**wozu** is a plugin in the form of a server decorator to list all defined routes of your [hapi.js](https://github.com/hapijs/hapi) server instance. Just call the server method and get a list of all endpoints including paths and methods.<br>
+**wozu** is a plugin in the form of a server decorator and an additional util to list all defined routes of your [hapi.js](https://github.com/hapijs/hapi) server instance. Just call the server method and get a list of all endpoints including paths and methods.<br>
 *wozu* is the German translation for *wherefore* - it was implemented as an util related to the plugin [wo](https://github.com/rjrodger/wo).
 
 This plugin is implemented in ECMAScript 6 without any transpilers like `babel`.<br>
@@ -46,7 +47,9 @@ const wozu = require('wozu');
 #### Create hapi server
 Afterwards create your hapi server and the corresponding connection if not already done:
 ``` js
-const server = new Hapi.Server();
+const hapi = require('hapi');
+
+const server = new hapi.Server();
 
 server.connection({
   port: 8888,
@@ -80,15 +83,46 @@ server.register({
       silent: true
     }
   }
-})
+});
 ```
 
 The method returns a sorted and unified list of all defined routes.<br>
 Furthermore it is possible to pass an optional `labels` parameter to select specific connections.
 
+## Usage as Util
+This package include besides the plugin a corresponding util feature, so it is not necessary `wozu` as a plugin:
+
+``` js
+const wozu = require('wozu');
+const hapi = require('hapi');
+
+const server = new hapi.Server();
+
+server.connection({
+  port: 8888,
+  host: 'localhost',
+});
+
+server.register({
+  register: require('wo'),
+  options: {
+    bases,
+    route: wozu.list(server),
+    sneeze: {
+      silent: true
+    }
+  }
+});
+```
+
 ## API
 `server.wozu([labels])`
 
+- `labels {string | Array.<string>}` - label or array of labels to [select specific connections](https://hapijs.com/api#serverselectlabels).
+
+`wozu.list(server, [labels])`
+
+- `server {Object}` - the corresponding [hapi server object](https://hapijs.com/api#server).
 - `labels {string | Array.<string>}` - label or array of labels to [select specific connections](https://hapijs.com/api#serverselectlabels).
 
 

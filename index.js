@@ -37,6 +37,26 @@ function getRoutes (entry) {
  * @public
  *
  * @description
+ * Get flattened list of all defined routes
+ *
+ * @param {string | Array.<string>} [labels] Labels to select specific connections
+ * @returns {Array.<?Object>} Flattened list of routes
+ */
+function decorator (server, labels) {
+  joi.assert(labels, internals.scheme.labels, 'The parameter "labels" is invalid. Its')
+
+  const connections = labels ? server.select(labels) : server
+  const routeList = _.flatten(connections.table().map(getRoutes))
+  const sorted = _.sortBy(routeList, internals.cb.serialize)
+
+  return _.sortedUniqBy(sorted, internals.cb.serialize)
+}
+
+/**
+ * @function
+ * @public
+ *
+ * @description
  * Plugin to get list of defined routes
  *
  * @param {hapi.Server} server The related hapi server instance
@@ -44,26 +64,7 @@ function getRoutes (entry) {
  * @param {Function} next The callback to continue in the chain of plugins
  */
 function wozu (server, pluginOptions, next) {
-  /**
-   * @function
-   * @public
-   *
-   * @description
-   * Get flattened list of all defined routes
-   *
-   * @param {string | Array.<string>} [labels] Labels to select specific connections
-   * @returns {Array.<?Object>} Flattened list of routes
-   */
-  server.decorate('server', 'wozu', function decorator (labels) {
-    joi.assert(labels, internals.scheme.labels, 'The parameter "labels" is invalid. Its')
-
-    const connections = labels ? server.select(labels) : server
-    const routeList = _.flatten(connections.table().map(getRoutes))
-    const sorted = _.sortBy(routeList, internals.cb.serialize)
-
-    return _.sortedUniqBy(sorted, internals.cb.serialize)
-  })
-
+  server.decorate('server', 'wozu', (labels) => decorator(server, labels))
   next()
 }
 
@@ -72,5 +73,6 @@ wozu.attributes = {
 }
 
 module.exports = {
-  register: wozu
+  register: wozu,
+  list: decorator
 }
