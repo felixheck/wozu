@@ -1,17 +1,6 @@
 const hapi = require('hapi')
 const wozu = require('../index')
 
-function registerPlugin (server) {
-  server.register(wozu, () => {})
-}
-
-function setConnections (server) {
-  server.connection({
-    host: '127.0.0.1',
-    port: 1337
-  })
-}
-
 function setRoutes (server) {
   server.route([
     {
@@ -48,16 +37,17 @@ function setRoutes (server) {
 }
 
 function getServer () {
-  const server = new hapi.Server()
+  const server = new hapi.Server({
+    host: '127.0.0.1',
+    port: 1337
+  })
 
-  setConnections(server)
   setRoutes(server)
-  registerPlugin(server)
+  server.register(wozu)
 
   return server
 }
 
 module.exports = {
-  getServer,
-  registerPlugin
+  getServer
 }

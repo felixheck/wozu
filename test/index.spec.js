@@ -2,16 +2,22 @@ const test = require('ava')
 const helpers = require('./_helpers')
 const wozu = require('../index')
 
-test('throw error if plugin gets registered twice', (t) => {
-  const server = helpers.getServer()
+test.beforeEach((t) => {
+	t.context.server = helpers.getServer();
+});
 
-  t.throws(() => helpers.registerPlugin(server), Error)
+
+test('throw error if plugin gets registered twice', async (t) => {
+  try {
+    await t.context.server.register(wozu)
+  } catch (err) {
+    t.truthy(err)
+    t.is(err.message, 'Plugin wozu already registered')
+  }
 })
 
 test('get list of routes of single connection', (t) => {
-  const server = helpers.getServer()
-
-  t.deepEqual(server.wozu(), [
+  t.deepEqual(t.context.server.wozu(), [
     {
       method: 'delete',
       path: '/foo/{id}'
@@ -40,9 +46,7 @@ test('get list of routes of single connection', (t) => {
 })
 
 test('get list of routes of single connection as util', (t) => {
-  const server = helpers.getServer()
-
-  t.deepEqual(wozu.list(server), [
+  t.deepEqual(wozu.list(t.context.server), [
     {
       method: 'delete',
       path: '/foo/{id}'
