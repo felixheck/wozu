@@ -1,5 +1,5 @@
 const test = require('ava')
-const helpers = require('./helpers')
+const helpers = require('./_helpers')
 const wozu = require('../index')
 
 test('throw error if plugin gets registered twice', (t) => {
