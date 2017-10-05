@@ -32,11 +32,6 @@ or clone the repository:
 $ git clone https://github.com/felixheck/wozu
 ```
 
-Alternatively use the [Yarn Package Manager](https://yarnpkg.com):
-```
-$ yarn add wozu
-```
-
 ## Usage
 #### Import
 First you have to import the module:
