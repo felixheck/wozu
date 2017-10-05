@@ -18,8 +18,8 @@
 **wozu** is a plugin in the form of a server decorator and an additional util to list all defined routes of your [hapi.js](https://github.com/hapijs/hapi) server instance. Just call the server method and get a list of all endpoints including paths and methods.<br>
 *wozu* is the German translation for *wherefore* - it was implemented as an util related to the plugin [wo](https://github.com/rjrodger/wo).
 
-This plugin is implemented in ECMAScript 6 without any transpilers like `babel`.<br>
-Additionally `standard` and `ava` are used to grant a high quality implementation.
+The modules `standard` and `ava` are used to grant a high quality implementation.<br>
+This major release supports just [hapi.js](https://github.com/hapijs/hapi) >=v16.0.0 and node >=v8.0.0 — to support older versions please use `v1.1.1`.
 
 ## Installation
 For installation use the [Node Package Manager](https://github.com/npm/npm):
@@ -44,9 +44,7 @@ Afterwards create your hapi server and the corresponding connection if not alrea
 ``` js
 const hapi = require('hapi');
 
-const server = new hapi.Server();
-
-server.connection({
+const server = new hapi.Server({
   port: 8888,
   host: 'localhost',
 });
@@ -57,9 +55,7 @@ Additionally register all your routes.
 #### Registration
 Finally register the plugin per `server.register()`:
 ``` js
-server.register(wozu, err => {
-  if (err) throw err
-});
+server.register(wozu).catch(console.error);
 ```
 
 After registering `wozu`, the [hapi server object](https://hapijs.com/api#server) will be decorated with the new method `server.wozu()`.<br>
@@ -78,7 +74,7 @@ server.register({
       silent: true
     }
   }
-});
+}).catch(console.error)
 ```
 
 The method returns a sorted and unified list of all defined routes.<br>
@@ -90,9 +86,7 @@ This package include besides the plugin a corresponding util feature, so it is n
 const wozu = require('wozu');
 const hapi = require('hapi');
 
-const server = new hapi.Server();
-
-server.connection({
+const server = new hapi.Server({
   port: 8888,
   host: 'localhost',
 });
@@ -106,7 +100,7 @@ server.register({
       silent: true
     }
   }
-});
+}).catch(console.error)
 ```
 
 ## API
