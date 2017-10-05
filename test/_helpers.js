@@ -1,27 +1,18 @@
 const hapi = require('hapi')
-const wozu = require('../../index')
+const wozu = require('../index')
 
 function registerPlugin (server) {
   server.register(wozu, () => {})
 }
 
-function setConnections (server, multiple) {
+function setConnections (server) {
   server.connection({
     host: '127.0.0.1',
-    port: 1337,
-    labels: ['a']
+    port: 1337
   })
-
-  if (multiple) {
-    server.connection({
-      host: '0.0.0.0',
-      port: 1338,
-      labels: ['b']
-    })
-  }
 }
 
-function setRoutes (server, multiple) {
+function setRoutes (server) {
   server.route([
     {
       method: 'GET',
@@ -54,21 +45,13 @@ function setRoutes (server, multiple) {
       handler () {}
     }
   ])
-
-  if (multiple) {
-    server.select('b').route({
-      method: 'GET',
-      path: '/foo/b',
-      handler () {}
-    })
-  }
 }
 
-function getServer (multiple = false) {
+function getServer () {
   const server = new hapi.Server()
 
-  setConnections(server, multiple)
-  setRoutes(server, multiple)
+  setConnections(server)
+  setRoutes(server)
   registerPlugin(server)
 
   return server

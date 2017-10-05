@@ -1,21 +1,18 @@
 const _ = require('lodash')
-const joi = require('joi')
 const pkg = require('./package.json')
 
 /**
- * @type {Object}
+ * @function
  * @private
  *
  * @description
- * Store internal objects
+ * Serialize route object for further processing
+ *
+ * @param {Object} route The current route object
+ * @returns {string} Serialized route object
  */
-const internals = {
-  cb: {
-    serialize: (route) => `${route.method}:${route.path}`
-  },
-  scheme: {
-    labels: joi.array().items(joi.string().min(1)).min(1).single()
-  }
+function serialize (route) {
+  return `${route.method}:${route.path}`
 }
 
 /**
@@ -39,17 +36,13 @@ function getRoutes (entry) {
  * @description
  * Get flattened list of all defined routes
  *
- * @param {string | Array.<string>} [labels] Labels to select specific connections
  * @returns {Array.<?Object>} Flattened list of routes
  */
-function decorator (server, labels) {
-  joi.assert(labels, internals.scheme.labels, 'The parameter "labels" is invalid. Its')
+function decorator (server) {
+  const routeList = _.flatten(server.table().map(getRoutes))
+  const sorted = _.sortBy(routeList, serialize)
 
-  const connections = labels ? server.select(labels) : server
-  const routeList = _.flatten(connections.table().map(getRoutes))
-  const sorted = _.sortBy(routeList, internals.cb.serialize)
-
-  return _.sortedUniqBy(sorted, internals.cb.serialize)
+  return _.sortedUniqBy(sorted, serialize)
 }
 
 /**
@@ -61,11 +54,9 @@ function decorator (server, labels) {
  *
  * @param {hapi.Server} server The related hapi server instance
  * @param {Object} pluginOptions The plugin options
- * @param {Function} next The callback to continue in the chain of plugins
  */
-function wozu (server, pluginOptions, next) {
-  server.decorate('server', 'wozu', (labels) => decorator(server, labels))
-  next()
+function wozu (server, pluginOptions) {
+  server.decorate('server', 'wozu', () => decorator(server))
 }
 
 wozu.attributes = {

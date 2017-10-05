@@ -87,7 +87,6 @@ server.register({
 ```
 
 The method returns a sorted and unified list of all defined routes.<br>
-Furthermore it is possible to pass an optional `labels` parameter to select specific connections.
 
 ## Usage as Util
 This package include besides the plugin a corresponding util feature, so it is not necessary `wozu` as a plugin:
@@ -116,15 +115,11 @@ server.register({
 ```
 
 ## API
-`server.wozu([labels])`
-
-- `labels {string | Array.<string>}` - label or array of labels to [select specific connections](https://hapijs.com/api#serverselectlabels).
-
-`wozu.list(server, [labels])`
+`wozu.list(server)`
 
 - `server {Object}` - the corresponding [hapi server object](https://hapijs.com/api#server).
-- `labels {string | Array.<string>}` - label or array of labels to [select specific connections](https://hapijs.com/api#serverselectlabels).
 
+`server.wozu()`
 
 ## Developing and Testing
 First you have to install all dependencies:
