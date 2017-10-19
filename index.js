@@ -12,7 +12,7 @@ const pkg = require('./package.json')
  * @throws The options are invalid
  */
 function validate (host) {
-  joi.assert(host, joi.string().min(1).optional(), 'The parameter `host` is invalid. Its')
+  joi.assert(host, joi.array().items(joi.string().min(1)).min(1).single(), 'The parameter `host` is invalid. Its')
 }
 
 /**

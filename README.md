@@ -111,11 +111,11 @@ init();
 `wozu.list(server, [host])`
 
 - `server {Object}` - the corresponding [hapi server object](https://hapijs.com/api#server).
-- `host {string}` - the host to filter routes matching a specific virtual host.
+- `host {string|Array.<string>}` - the host to filter routes matching a specific virtual host.
 
 `server.wozu([host])`
 
-- `host {string}` - the host to filter routes matching a specific virtual host.
+- `host {string|Array.<string>}` - the host to filter routes matching a specific virtual host.
 
 
 ## Developing and Testing

@@ -70,8 +70,18 @@ test('get list of routes of server as util', (t) => {
   }, ...sortedList])
 })
 
-test('get list of selected routes | vhost', (t) => {
+test('get list of routes by selected vhost', (t) => {
   const server = helpers.getServer(true)
 
   t.deepEqual(server.wozu('2.foohost.com'), sortedList)
+})
+
+test('get list of routes by multiple selected vhosts', (t) => {
+  const server = helpers.getServer(true)
+
+  t.deepEqual(server.wozu(['1.foohost.com', '2.foohost.com']), [{
+    method: 'delete',
+    path: '/foo/{id}',
+    vhost: '1.foohost.com',
+  }, ...sortedList])
 })
