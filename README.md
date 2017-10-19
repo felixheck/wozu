@@ -91,7 +91,7 @@ const server = hapi.server({
   host: 'localhost',
 });
 
-async function init() {
+(async () => {
   await server.register({
     register: require('wo'),
     options: {
@@ -102,9 +102,7 @@ async function init() {
       }
     }
   })
-}
-
-init();
+})();
 ```
 
 ## API
