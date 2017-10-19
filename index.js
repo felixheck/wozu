@@ -82,7 +82,7 @@ function decorator (server, ...rest) {
  * @param {hapi.Server} server The related hapi server instance
  * @param {Object} pluginOptions The plugin options
  */
-async function wozu (server, pluginOptions) {
+function wozu (server, pluginOptions) {
   server.decorate('server', 'wozu', (host) => decorator(server, host))
 }
 
