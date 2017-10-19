@@ -19,7 +19,6 @@ function validate (host) {
  * @function
  * @private
  *
- * @description
  * Serialize route object for further processing
  *
  * @param {string} path The current route path
@@ -35,7 +34,6 @@ function serialize ({ path, method, vhost = '*' }) {
  * @function
  * @private
  *
- * @description
  * Get all routes in server table
  *
  * @param {hapi.Server} server The related hapi server instance
@@ -56,7 +54,6 @@ function getRoutes (server, host) {
  * @function
  * @public
  *
- * @description
  * Get sort list of all defined routes
  *
  * @param {hapi.Server} server The related hapi server instance
@@ -76,7 +73,6 @@ function decorator (server, ...rest) {
  * @function
  * @public
  *
- * @description
  * Plugin to get list of defined routes
  *
  * @param {hapi.Server} server The related hapi server instance
