@@ -19,7 +19,7 @@
 *wozu* is the German translation for *wherefore* - it was implemented as an util related to the plugin [wo](https://github.com/rjrodger/wo).
 
 The modules `standard` and `ava` are used to grant a high quality implementation.<br>
-This major release supports just [hapi.js](https://github.com/hapijs/hapi) `>=v16.0.0` and node `>=v8.0.0` https://github.com/felixheck/wozu/tree/release/2.0.0 — to support older versions please use `v1.1.1`.
+This major release supports just [hapi.js](https://github.com/hapijs/hapi) `>=v17.0.0` and node `>=v8.0.0` — to support older versions please use `v1.1.1`.
 
 ## Installation
 For installation use the [Node Package Manager](https://github.com/npm/npm):
