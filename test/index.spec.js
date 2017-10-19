@@ -61,7 +61,7 @@ test('get list of routes of single connection as util', (t) => {
   t.deepEqual(wozu.list(t.context.server), sortedList)
 })
 
-test.skip('get list of routes of selected connection', (t) => {
+test('get list of selected routes', (t) => {
   const server = helpers.getServer(true)
 
   t.deepEqual(server.wozu('foohost.com'), [
