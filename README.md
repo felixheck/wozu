@@ -44,7 +44,7 @@ Afterwards create your hapi server and the corresponding connection if not alrea
 ``` js
 const hapi = require('hapi');
 
-const server = new hapi.Server({
+const server = hapi.server({
   port: 8888,
   host: 'localhost',
 });
@@ -55,7 +55,7 @@ Additionally register all your routes.
 #### Registration
 Finally register the plugin per `server.register()`:
 ``` js
-server.register(wozu).catch(console.error);
+await server.register(wozu);
 ```
 
 After registering `wozu`, the [hapi server object](https://hapijs.com/api#server) will be decorated with the new method `server.wozu()`.<br>
@@ -65,7 +65,7 @@ It is not allowed to register `wozu` twice.
 Use the plugin/util in the required context. For example during the registration of `wo`:
 
 ``` js
-server.register({
+await server.register({
   register: require('wo'),
   options: {
     bases,
@@ -74,33 +74,37 @@ server.register({
       silent: true
     }
   }
-}).catch(console.error)
+})
 ```
 
 The method returns a sorted and unified list of all defined routes.<br>
 
 ## Usage as Util
-This package include besides the plugin a corresponding util feature, so it is not necessary `wozu` as a plugin:
+This package include besides the plugin a corresponding util feature, so it is not necessary to use `wozu` as a plugin:
 
 ``` js
 const wozu = require('wozu');
 const hapi = require('hapi');
 
-const server = new hapi.Server({
+const server = hapi.server({
   port: 8888,
   host: 'localhost',
 });
 
-server.register({
-  register: require('wo'),
-  options: {
-    bases,
-    route: wozu.list(server),
-    sneeze: {
-      silent: true
+async function init() {
+  await server.register({
+    register: require('wo'),
+    options: {
+      bases,
+      route: wozu.list(server),
+      sneeze: {
+        silent: true
+      }
     }
-  }
-}).catch(console.error)
+  })
+}
+
+init();
 ```
 
 ## API
