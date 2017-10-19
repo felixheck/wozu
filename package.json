@@ -35,11 +35,12 @@
     "coverage": "nyc report --reporter=lcov"
   },
   "dependencies": {
+    "joi": "^13.0.0",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
     "ava": "^0.21.0",
-    "hapi": "^16.4.3",
+    "hapi": "^17.0.0",
     "nyc": "^11.0.3",
     "standard": "^10.0.2"
   },
