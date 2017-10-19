@@ -22,11 +22,13 @@ function validate (host) {
  * @description
  * Serialize route object for further processing
  *
- * @param {Object} route The current route object
+ * @param {string} path The current route path
+ * @param {string} method The current route method
+ * @param {string} [vhost='*'] The current route vhost
  * @returns {string} Serialized route object
  */
-function serialize (route) {
-  return `${route.path}:${route.method}`
+function serialize ({ path, method, vhost = '*' }) {
+  return `${path}:${method}:${vhost}`
 }
 
 /**
@@ -41,9 +43,13 @@ function serialize (route) {
  * @returns {Array.<?Object>} List of routes
  */
 function getRoutes (server, host) {
-  console.log(host); // foohost.com
-
-  return server.table(host).map(({ path, method }) => ({ path, method }))
+  return server.table(host).map(({ path, method, settings: { vhost } }) => {
+    return {
+      path,
+      method,
+      ...(vhost ? { vhost } : {})
+    }
+  })
 }
 
 /**

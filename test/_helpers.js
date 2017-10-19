@@ -31,7 +31,13 @@ function setRoutes (server) {
     {
       method: 'DELETE',
       path: '/foo/{id}',
-      vhost: 'foohost.com',
+      vhost: '1.foohost.com',
+      handler () {}
+    },
+    {
+      method: 'DELETE',
+      path: '/foo/{id}',
+      vhost: '2.foohost.com',
       handler () {}
     }
   ])

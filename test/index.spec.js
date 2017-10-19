@@ -5,7 +5,8 @@ const wozu = require('../index')
 const sortedList = [
   {
     method: 'delete',
-    path: '/foo/{id}'
+    path: '/foo/{id}',
+    vhost: '2.foohost.com',
   },
   {
     method: 'get',
@@ -53,21 +54,24 @@ test('throw error because `labels` is invalid', (t) => {
   t.throws(() => server.wozu([42]), Error)
 })
 
-test('get list of routes of single connection', (t) => {
-  t.deepEqual(t.context.server.wozu(), sortedList)
+test('get list of routes of server', (t) => {
+  t.deepEqual(t.context.server.wozu(), [{
+    method: 'delete',
+    path: '/foo/{id}',
+    vhost: '1.foohost.com',
+  }, ...sortedList])
 })
 
-test('get list of routes of single connection as util', (t) => {
-  t.deepEqual(wozu.list(t.context.server), sortedList)
+test('get list of routes of server as util', (t) => {
+  t.deepEqual(wozu.list(t.context.server), [{
+    method: 'delete',
+    path: '/foo/{id}',
+    vhost: '1.foohost.com',
+  }, ...sortedList])
 })
 
-test('get list of selected routes', (t) => {
+test('get list of selected routes | vhost', (t) => {
   const server = helpers.getServer(true)
 
-  t.deepEqual(server.wozu('foohost.com'), [
-    {
-      method: 'delete',
-      path: '/foo/{id}'
-    }
-  ])
+  t.deepEqual(server.wozu('2.foohost.com'), sortedList)
 })
