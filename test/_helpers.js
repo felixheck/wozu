@@ -31,13 +31,14 @@ function setRoutes (server) {
     {
       method: 'DELETE',
       path: '/foo/{id}',
+      vhost: 'foohost.com',
       handler () {}
     }
   ])
 }
 
 function getServer () {
-  const server = new hapi.Server({
+  const server = hapi.server({
     host: '127.0.0.1',
     port: 1337
   })

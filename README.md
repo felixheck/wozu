@@ -104,11 +104,15 @@ server.register({
 ```
 
 ## API
-`wozu.list(server)`
+`wozu.list(server, [host])`
 
 - `server {Object}` - the corresponding [hapi server object](https://hapijs.com/api#server).
+- `host {string}` - the host to filter routes matching a specific virtual host.
 
-`server.wozu()`
+`server.wozu([host])`
+
+- `host {string}` - the host to filter routes matching a specific virtual host.
+
 
 ## Developing and Testing
 First you have to install all dependencies:

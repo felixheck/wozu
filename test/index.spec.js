@@ -2,10 +2,36 @@ const test = require('ava')
 const helpers = require('./_helpers')
 const wozu = require('../index')
 
-test.beforeEach((t) => {
-	t.context.server = helpers.getServer();
-});
+const sortedList = [
+  {
+    method: 'delete',
+    path: '/foo/{id}'
+  },
+  {
+    method: 'get',
+    path: '/foo/{id}'
+  },
+  {
+    method: 'patch',
+    path: '/foo/{id}'
+  },
+  {
+    method: 'put',
+    path: '/foo/{id}'
+  },
+  {
+    method: 'get',
+    path: '/foo'
+  },
+  {
+    method: 'post',
+    path: '/foo'
+  }
+]
 
+test.beforeEach((t) => {
+  t.context.server = helpers.getServer()
+})
 
 test('throw error if plugin gets registered twice', async (t) => {
   try {
@@ -16,59 +42,31 @@ test('throw error if plugin gets registered twice', async (t) => {
   }
 })
 
+test('throw error because `labels` is invalid', (t) => {
+  const server = helpers.getServer(false)
+
+  t.throws(() => server.wozu(42), Error)
+  t.throws(() => server.wozu(null), Error)
+  t.throws(() => server.wozu({}), Error)
+  t.throws(() => server.wozu(''), Error)
+  t.throws(() => server.wozu([]), Error)
+  t.throws(() => server.wozu([42]), Error)
+})
+
 test('get list of routes of single connection', (t) => {
-  t.deepEqual(t.context.server.wozu(), [
-    {
-      method: 'delete',
-      path: '/foo/{id}'
-    },
-    {
-      method: 'get',
-      path: '/foo'
-    },
-    {
-      method: 'get',
-      path: '/foo/{id}'
-    },
-    {
-      method: 'patch',
-      path: '/foo/{id}'
-    },
-    {
-      method: 'post',
-      path: '/foo'
-    },
-    {
-      method: 'put',
-      path: '/foo/{id}'
-    }
-  ])
+  t.deepEqual(t.context.server.wozu(), sortedList)
 })
 
 test('get list of routes of single connection as util', (t) => {
-  t.deepEqual(wozu.list(t.context.server), [
+  t.deepEqual(wozu.list(t.context.server), sortedList)
+})
+
+test.skip('get list of routes of selected connection', (t) => {
+  const server = helpers.getServer(true)
+
+  t.deepEqual(server.wozu('foohost.com'), [
     {
       method: 'delete',
-      path: '/foo/{id}'
-    },
-    {
-      method: 'get',
-      path: '/foo'
-    },
-    {
-      method: 'get',
-      path: '/foo/{id}'
-    },
-    {
-      method: 'patch',
-      path: '/foo/{id}'
-    },
-    {
-      method: 'post',
-      path: '/foo'
-    },
-    {
-      method: 'put',
       path: '/foo/{id}'
     }
   ])

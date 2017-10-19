@@ -1,5 +1,19 @@
 const _ = require('lodash')
+const joi = require('joi')
 const pkg = require('./package.json')
+
+/**
+ * @function
+ * @private
+ *
+ * Validate the plugin's options
+ *
+ * @param {string} host The host to filter by virtual host
+ * @throws The options are invalid
+ */
+function validate (host) {
+  joi.assert(host, joi.string().min(1).optional(), 'The parameter `host` is invalid. Its')
+}
 
 /**
  * @function
@@ -12,7 +26,7 @@ const pkg = require('./package.json')
  * @returns {string} Serialized route object
  */
 function serialize (route) {
-  return `${route.method}:${route.path}`
+  return `${route.path}:${route.method}`
 }
 
 /**
@@ -20,13 +34,16 @@ function serialize (route) {
  * @private
  *
  * @description
- * Get all routes per entry in server table
+ * Get all routes in server table
  *
- * @param {Object} entry The related entry of server table
+ * @param {hapi.Server} server The related hapi server instance
+ * @param {string} host The host to filter by virtual host
  * @returns {Array.<?Object>} List of routes
  */
-function getRoutes (entry) {
-  return entry.table.map(({ path, method }) => ({ path, method }))
+function getRoutes (server, host) {
+  console.log(host); // foohost.com
+
+  return server.table(host).map(({ path, method }) => ({ path, method }))
 }
 
 /**
@@ -34,12 +51,16 @@ function getRoutes (entry) {
  * @public
  *
  * @description
- * Get flattened list of all defined routes
+ * Get sort list of all defined routes
  *
+ * @param {hapi.Server} server The related hapi server instance
+ * @param {Array} rest The additional arguments passed
  * @returns {Array.<?Object>} Flattened list of routes
  */
-function decorator (server) {
-  const routeList = _.flatten(server.table().map(getRoutes))
+function decorator (server, ...rest) {
+  validate(...rest)
+
+  const routeList = getRoutes(server, ...rest);
   const sorted = _.sortBy(routeList, serialize)
 
   return _.sortedUniqBy(sorted, serialize)
@@ -55,15 +76,12 @@ function decorator (server) {
  * @param {hapi.Server} server The related hapi server instance
  * @param {Object} pluginOptions The plugin options
  */
-function wozu (server, pluginOptions) {
-  server.decorate('server', 'wozu', () => decorator(server))
-}
-
-wozu.attributes = {
-  pkg
+async function wozu (server, pluginOptions) {
+  server.decorate('server', 'wozu', (host) => decorator(server, host))
 }
 
 module.exports = {
   register: wozu,
-  list: decorator
+  list: decorator,
+  pkg
 }
