@@ -12,7 +12,11 @@ const pkg = require('./package.json')
  * @throws The options are invalid
  */
 function validate (host) {
-  joi.assert(host, joi.array().items(joi.string().min(1)).min(1).single(), 'The parameter `host` is invalid. Its')
+  const hostScheme = joi.array()
+    .items(joi.string().min(1))
+    .min(1).single()
+
+  joi.assert(host, hostScheme, 'The parameter `host` is invalid. Its')
 }
 
 /**
@@ -41,13 +45,11 @@ function serialize ({ path, method, vhost = '*' }) {
  * @returns {Array.<?Object>} List of routes
  */
 function getRoutes (server, host) {
-  return server.table(host).map(({ path, method, settings: { vhost } }) => {
-    return {
-      path,
-      method,
-      ...(vhost ? { vhost } : {})
-    }
-  })
+  return server.table(host).map(({ path, method, settings: { vhost } }) => ({
+    path,
+    method,
+    ...(vhost ? { vhost } : {})
+  }))
 }
 
 /**
@@ -76,9 +78,8 @@ function decorator (server, ...rest) {
  * Plugin to get list of defined routes
  *
  * @param {hapi.Server} server The related hapi server instance
- * @param {Object} pluginOptions The plugin options
  */
-function wozu (server, pluginOptions) {
+async function wozu (server) {
   server.decorate('server', 'wozu', (host) => decorator(server, host))
 }
 
