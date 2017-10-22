@@ -66,7 +66,7 @@ Use the plugin/util in the required context. For example during the registration
 
 ``` js
 await server.register({
-  register: require('wo'),
+  plugin: require('wo'),
   options: {
     bases,
     route: server.wozu(),
@@ -93,7 +93,7 @@ const server = hapi.server({
 
 (async () => {
   await server.register({
-    register: require('wo'),
+    plugin: require('wo'),
     options: {
       bases,
       route: wozu.list(server),
