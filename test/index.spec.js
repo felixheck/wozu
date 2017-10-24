@@ -35,12 +35,10 @@ test.beforeEach((t) => {
 })
 
 test('throw error if plugin gets registered twice', async (t) => {
-  try {
-    await t.context.server.register(wozu)
-  } catch (err) {
-    t.truthy(err)
-    t.is(err.message, 'Plugin wozu already registered')
-  }
+  const err = await t.throws(t.context.server.register(wozu))
+
+  t.truthy(err)
+  t.is(err.message, 'Plugin wozu already registered')
 })
 
 test('throw error because `labels` is invalid', (t) => {

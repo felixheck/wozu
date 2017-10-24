@@ -79,7 +79,7 @@ function decorator (server, ...rest) {
  *
  * @param {hapi.Server} server The related hapi server instance
  */
-async function wozu (server) {
+function wozu (server) {
   server.decorate('server', 'wozu', (host) => decorator(server, host))
 }
 
