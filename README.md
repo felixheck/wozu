@@ -12,7 +12,6 @@
 5. [API](#api)
 6. [Developing and Testing](#developing-and-testing)
 7. [Contribution](#contribution)
-8. [License](#license)
 
 ## Introduction
 **wozu** is a plugin in the form of a server decorator and an additional util to list all defined routes of your [hapi.js](https://github.com/hapijs/hapi) server instance. Just call the server method and get a list of all endpoints including paths and methods.<br>
