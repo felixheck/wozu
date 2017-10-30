@@ -40,7 +40,7 @@ const wozu = require('wozu');
 ```
 
 #### Create hapi server
-Afterwards create your hapi server and the corresponding connection if not already done:
+Afterwards create your hapi server if not already done:
 ``` js
 const hapi = require('hapi');
 
