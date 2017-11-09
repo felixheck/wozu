@@ -65,7 +65,7 @@ function getRoutes (server, host) {
 function decorator (server, ...rest) {
   validate(...rest)
 
-  const routeList = getRoutes(server, ...rest);
+  const routeList = getRoutes(server, ...rest)
   const sorted = _.sortBy(routeList, serialize)
 
   return _.sortedUniqBy(sorted, serialize)

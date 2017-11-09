@@ -6,7 +6,7 @@ const sortedList = [
   {
     method: 'delete',
     path: '/foo/{id}',
-    vhost: '2.foohost.com',
+    vhost: '2.foohost.com'
   },
   {
     method: 'get',
@@ -56,7 +56,7 @@ test('get list of routes of server', (t) => {
   t.deepEqual(t.context.server.wozu(), [{
     method: 'delete',
     path: '/foo/{id}',
-    vhost: '1.foohost.com',
+    vhost: '1.foohost.com'
   }, ...sortedList])
 })
 
@@ -64,7 +64,7 @@ test('get list of routes of server as util', (t) => {
   t.deepEqual(wozu.list(t.context.server), [{
     method: 'delete',
     path: '/foo/{id}',
-    vhost: '1.foohost.com',
+    vhost: '1.foohost.com'
   }, ...sortedList])
 })
 
@@ -80,6 +80,6 @@ test('get list of routes by multiple selected vhosts', (t) => {
   t.deepEqual(server.wozu(['1.foohost.com', '2.foohost.com']), [{
     method: 'delete',
     path: '/foo/{id}',
-    vhost: '1.foohost.com',
+    vhost: '1.foohost.com'
   }, ...sortedList])
 })
