@@ -3,76 +3,88 @@ const joi = require('joi')
 const pkg = require('./package.json')
 
 /**
- * @type {Object}
+ * @function
  * @private
  *
- * @description
- * Store internal objects
+ * Validate the plugin's options
+ *
+ * @param {string} host The host to filter by virtual host
+ * @throws The options are invalid
  */
-const internals = {
-  cb: {
-    serialize: (route) => `${route.method}:${route.path}`
-  },
-  scheme: {
-    labels: joi.array().items(joi.string().min(1)).min(1).single()
-  }
+function validate (host) {
+  const hostScheme = joi.array()
+    .items(joi.string().min(1))
+    .min(1).single()
+
+  joi.assert(host, hostScheme, 'The parameter `host` is invalid. Its')
 }
 
 /**
  * @function
  * @private
  *
- * @description
- * Get all routes per entry in server table
+ * Serialize route object for further processing
  *
- * @param {Object} entry The related entry of server table
+ * @param {string} path The current route path
+ * @param {string} method The current route method
+ * @param {string} [vhost='*'] The current route vhost
+ * @returns {string} Serialized route object
+ */
+function serialize ({ path, method, vhost = '*' }) {
+  return `${path}:${method}:${vhost}`
+}
+
+/**
+ * @function
+ * @private
+ *
+ * Get all routes in server table
+ *
+ * @param {hapi.Server} server The related hapi server instance
+ * @param {string} host The host to filter by virtual host
  * @returns {Array.<?Object>} List of routes
  */
-function getRoutes (entry) {
-  return entry.table.map(({ path, method }) => ({ path, method }))
+function getRoutes (server, host) {
+  return server.table(host).map(({ path, method, settings: { vhost } }) => ({
+    path,
+    method,
+    ...(vhost ? { vhost } : {})
+  }))
 }
 
 /**
  * @function
  * @public
  *
- * @description
- * Get flattened list of all defined routes
+ * Get sort list of all defined routes
  *
- * @param {string | Array.<string>} [labels] Labels to select specific connections
+ * @param {hapi.Server} server The related hapi server instance
+ * @param {Array} rest The additional arguments passed
  * @returns {Array.<?Object>} Flattened list of routes
  */
-function decorator (server, labels) {
-  joi.assert(labels, internals.scheme.labels, 'The parameter "labels" is invalid. Its')
+function decorator (server, ...rest) {
+  validate(...rest)
 
-  const connections = labels ? server.select(labels) : server
-  const routeList = _.flatten(connections.table().map(getRoutes))
-  const sorted = _.sortBy(routeList, internals.cb.serialize)
+  const routeList = getRoutes(server, ...rest)
+  const sorted = _.sortBy(routeList, serialize)
 
-  return _.sortedUniqBy(sorted, internals.cb.serialize)
+  return _.sortedUniqBy(sorted, serialize)
 }
 
 /**
  * @function
  * @public
  *
- * @description
  * Plugin to get list of defined routes
  *
  * @param {hapi.Server} server The related hapi server instance
- * @param {Object} pluginOptions The plugin options
- * @param {Function} next The callback to continue in the chain of plugins
  */
-function wozu (server, pluginOptions, next) {
-  server.decorate('server', 'wozu', (labels) => decorator(server, labels))
-  next()
-}
-
-wozu.attributes = {
-  pkg
+function wozu (server) {
+  server.decorate('server', 'wozu', (host) => decorator(server, host))
 }
 
 module.exports = {
   register: wozu,
-  list: decorator
+  list: decorator,
+  pkg
 }

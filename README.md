@@ -1,4 +1,4 @@
-![wozu](https://raw.githubusercontent.com/felixheck/wozu/master/logo.png)
+![wozu](https://raw.githubusercontent.com/felixheck/wozu/master/assets/logo.png)
 
 #### Server decorator and util to list all defined hapi.js routes
 
@@ -12,14 +12,13 @@
 5. [API](#api)
 6. [Developing and Testing](#developing-and-testing)
 7. [Contribution](#contribution)
-8. [License](#license)
 
 ## Introduction
 **wozu** is a plugin in the form of a server decorator and an additional util to list all defined routes of your [hapi.js](https://github.com/hapijs/hapi) server instance. Just call the server method and get a list of all endpoints including paths and methods.<br>
 *wozu* is the German translation for *wherefore* - it was implemented as an util related to the plugin [wo](https://github.com/rjrodger/wo).
 
-This plugin is implemented in ECMAScript 6 without any transpilers like `babel`.<br>
-Additionally `standard` and `ava` are used to grant a high quality implementation.
+The modules `standard` and `ava` are used to grant a high quality implementation.<br>
+This major release supports just [hapi.js](https://github.com/hapijs/hapi) `>=v17.0.0` and node `>=v8.0.0` — to support older versions please use `v1.1.1`.
 
 ## Installation
 For installation use the [Node Package Manager](https://github.com/npm/npm):
@@ -32,11 +31,6 @@ or clone the repository:
 $ git clone https://github.com/felixheck/wozu
 ```
 
-Alternatively use the [Yarn Package Manager](https://yarnpkg.com):
-```
-$ yarn add wozu
-```
-
 ## Usage
 #### Import
 First you have to import the module:
@@ -45,13 +39,10 @@ const wozu = require('wozu');
 ```
 
 #### Create hapi server
-Afterwards create your hapi server and the corresponding connection if not already done:
+Afterwards create your hapi server if not already done:
 ``` js
 const hapi = require('hapi');
-
-const server = new hapi.Server();
-
-server.connection({
+const server = hapi.server({
   port: 8888,
   host: 'localhost',
 });
@@ -62,9 +53,7 @@ Additionally register all your routes.
 #### Registration
 Finally register the plugin per `server.register()`:
 ``` js
-server.register(wozu, err => {
-  if (err) throw err
-});
+await server.register(wozu);
 ```
 
 After registering `wozu`, the [hapi server object](https://hapijs.com/api#server) will be decorated with the new method `server.wozu()`.<br>
@@ -74,8 +63,8 @@ It is not allowed to register `wozu` twice.
 Use the plugin/util in the required context. For example during the registration of `wo`:
 
 ``` js
-server.register({
-  register: require('wo'),
+await server.register({
+  plugin: require('wo'),
   options: {
     bases,
     route: server.wozu(),
@@ -83,47 +72,46 @@ server.register({
       silent: true
     }
   }
-});
+})
 ```
 
 The method returns a sorted and unified list of all defined routes.<br>
-Furthermore it is possible to pass an optional `labels` parameter to select specific connections.
 
 ## Usage as Util
-This package include besides the plugin a corresponding util feature, so it is not necessary `wozu` as a plugin:
+This package include besides the plugin a corresponding util feature, so it is not necessary to use `wozu` as a plugin:
 
 ``` js
 const wozu = require('wozu');
 const hapi = require('hapi');
 
-const server = new hapi.Server();
-
-server.connection({
+const server = hapi.server({
   port: 8888,
   host: 'localhost',
 });
 
-server.register({
-  register: require('wo'),
-  options: {
-    bases,
-    route: wozu.list(server),
-    sneeze: {
-      silent: true
+(async () => {
+  await server.register({
+    plugin: require('wo'),
+    options: {
+      bases,
+      route: wozu.list(server),
+      sneeze: {
+        silent: true
+      }
     }
-  }
-});
+  })
+})();
 ```
 
 ## API
-`server.wozu([labels])`
-
-- `labels {string | Array.<string>}` - label or array of labels to [select specific connections](https://hapijs.com/api#serverselectlabels).
-
-`wozu.list(server, [labels])`
+`wozu.list(server, [host])`
 
 - `server {Object}` - the corresponding [hapi server object](https://hapijs.com/api#server).
-- `labels {string | Array.<string>}` - label or array of labels to [select specific connections](https://hapijs.com/api#serverselectlabels).
+- `host {string|Array.<string>}` - the host to filter routes matching a specific virtual host.
+
+`server.wozu([host])`
+
+- `host {string|Array.<string>}` - the host to filter routes matching a specific virtual host.
 
 
 ## Developing and Testing
@@ -151,26 +139,3 @@ $ npm run coverage
 Fork this repository and push in your ideas.
 
 Do not forget to add corresponding tests to keep up 100% test coverage.
-
-## License
-The MIT License
-
-Copyright (c) 2017 Felix Heck
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
