@@ -35,14 +35,14 @@
     "coverage": "nyc report --reporter=lcov"
   },
   "dependencies": {
-    "joi": "^13.0.0",
-    "lodash": "^4.17.4"
+    "joi": "^13.3.0",
+    "lodash": "^4.17.10"
   },
   "devDependencies": {
-    "ava": "^0.21.0",
-    "hapi": "^17.0.1",
-    "nyc": "^11.0.3",
-    "standard": "^10.0.2"
+    "ava": "^0.25.0",
+    "hapi": "^17.4.0",
+    "nyc": "^11.7.2",
+    "standard": "^11.0.1"
   },
   "peerDependencies": {
     "hapi": "^17.0.0"
