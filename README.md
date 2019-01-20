@@ -17,8 +17,14 @@
 **wozu** is a plugin in the form of a server decorator and an additional util to list all defined routes of your [hapi.js](https://github.com/hapijs/hapi) server instance. Just call the server method and get a list of all endpoints including paths and methods.<br>
 *wozu* is the German translation for *wherefore* - it was implemented as an util related to the plugin [wo](https://github.com/rjrodger/wo).
 
-The modules `standard` and `ava` are used to grant a high quality implementation.<br>
-This major release supports just [hapi.js](https://github.com/hapijs/hapi) `>=v17.0.0` and node `>=v8.0.0` — to support older versions please use `v1.1.1`.
+The modules `standard` and `ava` are used to grant a high quality implementation.
+
+#### Compatibility
+| Major Release | [hapi.js](https://github.com/hapijs/hapi) version | node version |
+| --- | --- | --- |
+| `v3` | `>=18` | `>=10` |
+| `v2` | `>=17` | `>=8` |
+| `v1` | `>=13` | `>=6` |
 
 ## Installation
 For installation use the [Node Package Manager](https://github.com/npm/npm):
