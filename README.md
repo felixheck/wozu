@@ -54,7 +54,7 @@ const wozu = require('wozu');
 #### Create hapi server
 Afterwards create your hapi server if not already done:
 ``` js
-const hapi = require('hapi');
+const hapi = require('@hapi/hapi');
 const server = hapi.server({
   port: 8888,
   host: 'localhost',
