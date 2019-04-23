@@ -5,13 +5,19 @@
 [![Travis](https://img.shields.io/travis/felixheck/wozu.svg)](https://travis-ci.org/felixheck/wozu/builds/) ![node](https://img.shields.io/node/v/wozu.svg) ![npm](https://img.shields.io/npm/dt/wozu.svg) [![standard](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](http://standardjs.com/) ![npm](https://img.shields.io/npm/l/wozu.svg)
 ---
 
-1. [Introduction](#introduction)
-2. [Installation](#installation)
-3. [Usage](#usage)
-4. [Usage as Util](#usage-as-util)
-5. [API](#api)
-6. [Developing and Testing](#developing-and-testing)
-7. [Contribution](#contribution)
+- [![Travis](https://travis-ci.org/felixheck/wozu/builds/) !node !npm ![standard](http://standardjs.com/) !npm](#travishttpstravis-ciorgfelixheckwozubuilds-node-npm-standardhttpstandardjscom-npm)
+- [Introduction](#introduction)
+    - [Compatibility](#compatibility)
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Import](#import)
+    - [Create hapi server](#create-hapi-server)
+    - [Registration](#registration)
+    - [Usage](#usage-1)
+- [Usage as Util](#usage-as-util)
+- [API](#api)
+- [Developing and Testing](#developing-and-testing)
+- [Contribution](#contribution)
 
 ## Introduction
 **wozu** is a plugin in the form of a server decorator and an additional util to list all defined routes of your [hapi.js](https://github.com/hapijs/hapi) server instance. Just call the server method and get a list of all endpoints including paths and methods.<br>
@@ -22,9 +28,10 @@ The modules `standard` and `ava` are used to grant a high quality implementation
 #### Compatibility
 | Major Release | [hapi.js](https://github.com/hapijs/hapi) version | node version |
 | --- | --- | --- |
-| `v3` | `>=18` | `>=8` |
-| `v2` | `>=17` | `>=8` |
-| `v1` | `>=13` | `>=6` |
+| `v3.1` | `>=18.3.1 @hapi/hapi` | `>=8` |
+| `v3` | `>=18 hapi` | `>=8` |
+| `v2` | `>=17 hapi` | `>=8` |
+| `v1` | `>=13 hapi` | `>=6` |
 
 ## Installation
 For installation use the [Node Package Manager](https://github.com/npm/npm):
