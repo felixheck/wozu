@@ -35,17 +35,17 @@
     "coverage": "nyc report --reporter=lcov"
   },
   "dependencies": {
-    "@hapi/joi": "^16.0.1",
-    "lodash": "^4.17.11"
+    "@hapi/joi": "^16.1.1",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@hapi/hapi": "^18.3.1",
+    "@hapi/hapi": "^18.4.0",
     "ava": "^2.4.0",
-    "nyc": "^14.0.0",
+    "nyc": "^14.1.1",
     "standard": "^14.3.0"
   },
   "peerDependencies": {
-    "@hapi/hapi": "^18.3.1"
+    "@hapi/hapi": "^18.4.0"
   },
   "engines": {
     "node": ">=8",
