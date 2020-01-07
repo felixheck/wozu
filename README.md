@@ -28,6 +28,7 @@ The modules `standard` and `ava` are used to grant a high quality implementation
 #### Compatibility
 | Major Release | [hapi.js](https://github.com/hapijs/hapi) version | node version |
 | --- | --- | --- |
+| `v4` | `>=18.4 @hapi/hapi` | `>=12` |
 | `v3.1` | `>=18.3.1 @hapi/hapi` | `>=8` |
 | `v3` | `>=18 hapi` | `>=8` |
 | `v2` | `>=17 hapi` | `>=8` |
