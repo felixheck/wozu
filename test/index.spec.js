@@ -44,12 +44,12 @@ test('throw error if plugin gets registered twice', async (t) => {
 test('throw error because `labels` is invalid', (t) => {
   const server = helpers.getServer(false)
 
-  t.throws(() => server.wozu(42), Error)
-  t.throws(() => server.wozu(null), Error)
-  t.throws(() => server.wozu({}), Error)
-  t.throws(() => server.wozu(''), Error)
-  t.throws(() => server.wozu([]), Error)
-  t.throws(() => server.wozu([42]), Error)
+  t.throws(() => server.wozu(42))
+  t.throws(() => server.wozu(null))
+  t.throws(() => server.wozu({}))
+  t.throws(() => server.wozu(''))
+  t.throws(() => server.wozu([]))
+  t.throws(() => server.wozu([42]))
 })
 
 test('get list of routes of server', (t) => {
